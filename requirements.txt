@@ -1,0 +1,19 @@
+#플라스크
+flask
+# 데이터베이스 관련 라이브러리
+pymysql
+sqlalchemy
+flask-sqlalchemy
+flask-migrate
+flask-smorest
+marshmallow
+marshmallow-enum
+# CLI 작성 보조 라이브러리
+click
+## 시각화 라이브러리
+plotly
+# 데이터 분석 라이브러리
+pandas
+# 코드 수정 라이브러리
+black
+isort
