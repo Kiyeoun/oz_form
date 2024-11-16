@@ -1,4 +1,5 @@
-#다시 파악해보기
+# SQLAchemy 모델 정의
+# 마시멜로로 스키마 생성
 from datetime import datetime, timezone
 from enum import Enum
 
