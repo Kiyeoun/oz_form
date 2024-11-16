@@ -6,7 +6,7 @@ api = Api()
 
 
 class Config:
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://username:password@localhost/dbname"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:1123@localhost/oz_form"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_POOL_SIZE = 10
     SQLALCHEMY_POOL_TIMEOUT = 5
