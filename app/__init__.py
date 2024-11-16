@@ -24,6 +24,8 @@ def create_app():
 
     # 블루 프린트 등록
     from app.routes import route_bp
+    
+    
     @click.command("init-db")
     @with_appcontext
     def init_db_command():
