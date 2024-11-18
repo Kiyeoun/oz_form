@@ -44,4 +44,4 @@ def create_app():
 
 	application.cli.add_command(init_db_command)
 
-	return application
+    return application
