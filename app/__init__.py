@@ -30,10 +30,7 @@ def create_app():
 	migrate.init_app(application, db) # 애플리케이션과 db를 인자로 보내 migrate 초기화
 
 	
-	from app.routes.post_question import route_blp
- 
- 
- 
+	from app.routes.signup import route_blp
 	application.register_blueprint(route_blp) # URL 라우팅을 관리하는 블루프린트 등록
 
 	@click.command("init-db") # 터미널에 flask init-db를 입력하면 테이블을 생성
