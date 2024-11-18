@@ -34,6 +34,10 @@
                     <option value="female">여성</option>
                 </select>
             </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">이메일</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
             <button type="submit" class="btn btn-primary btn-lg w-100">시작하기</button>
         </form>
     </div>
@@ -49,7 +53,8 @@
                 body: JSON.stringify({
                     name: document.getElementById('name').value,
                     age: document.getElementById('age').value,
-                    gender: document.getElementById('gender').value
+                    gender: document.getElementById('gender').value,
+                    email: document.getElementById('email').value
                 })
             });
             const data = await response.json();

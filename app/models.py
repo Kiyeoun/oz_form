@@ -1,7 +1,7 @@
-# SQLAchemy 모델 정의
-# 마시멜로로 스키마 생성
+#다시 파악해보기
 from datetime import datetime, timezone
 from enum import Enum
+
 from config import db
 
 
@@ -29,6 +29,7 @@ class User(db.Model):
     name = db.Column(db.String(10), nullable=False)
     age = db.Column(db.Enum(AgeStatus), nullable=False)
     gender = db.Column(db.Enum(GenderStatus), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
 
     def to_dict(self):
         return {
@@ -37,7 +38,8 @@ class User(db.Model):
             "age": self.age.value if hasattr(self.age, "value") else self.age,
             "gender": (
                 self.gender.value if hasattr(self.gender, "value") else self.gender
-            )
+            ),
+            "email": self.email,
         }
 
 
@@ -53,9 +55,7 @@ class Image(db.Model):
         return {
             "id": self.id,
             "url": self.url,
-            "type": self.type.value if hasattr(self.type, "value") else self.type
-            # enum을 한 번 더 확인하는 코드, self.type의 속성 중에 "value"가 있으면 True(기본적으로 enum은 value속성을 갖고 있다)
-            # self.type.value => 예를 들어 속성이 main이면 ImageStatus.main.value = "main"이 된다. ImageStatus.main까지만 적혀있으면 그냥 enum객체 취급이다.
+            "type": self.type.value if hasattr(self.type, "value") else self.type,
         }
 
 
