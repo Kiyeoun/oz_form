@@ -8,6 +8,15 @@ api = Api() # Flask-Smorest를 사용해 RESTful API를 관리하는 객체 초�
 
 
 class Config:
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:1123@localhost/oz_form"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_POOL_SIZE = 10
+    SQLALCHEMY_POOL_TIMEOUT = 5
+    SQLALCHEMY_POOL_RECYCLE = 1800
+    SQLALCHEMY_MAX_OVERFLOW = 5
+    SQLALCHEMY_ECHO = False
+    reload = True
+
 	SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:0000@localhost/oz_form" # 데이터베이스 연결 설정. 여기서는 MySQL에 연결
 	SQLALCHEMY_TRACK_MODIFICATIONS = False # SQLAlchemy의 이벤트 시스템(데이터베이스 변경 내용을 추적)을 끄는 설정, 성능 향상을 위해 끄는 게 좋음
 	SQLALCHEMY_POOL_SIZE = 10 # 데이터베이스 연결 풀에서 유지할 최대 연결 수
