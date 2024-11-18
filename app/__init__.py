@@ -25,13 +25,15 @@ def create_app():
 	application.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
 	application.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
 
-
 	db.init_app(application) # Flask application에 db 초기화
 	api.init_app(application) # Flask application에 api 초기화
 	migrate.init_app(application, db) # 애플리케이션과 db를 인자로 보내 migrate 초기화
 
 	
-	from app.routes import route_blp
+	from app.routes.post_question import route_blp
+ 
+ 
+ 
 	application.register_blueprint(route_blp) # URL 라우팅을 관리하는 블루프린트 등록
 
 	@click.command("init-db") # 터미널에 flask init-db를 입력하면 테이블을 생성
