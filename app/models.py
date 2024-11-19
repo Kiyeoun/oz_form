@@ -46,7 +46,6 @@ class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.TEXT, nullable=False)
     type = db.Column(db.Enum(ImageStatus), nullable=False)
-
     questions = db.relationship("Question", back_populates="image")
 
     def to_dict(self):
@@ -65,9 +64,7 @@ class Question(db.Model):
     title = db.Column(db.String(100), nullable=False)
     is_active = db.Column(db.Boolean, nullable=False, default=True)
     sqe = db.Column(db.Integer, nullable=False)
-
     image_id = db.Column(db.Integer, db.ForeignKey("images.id"), nullable=False)
-
     image = db.relationship("Image", back_populates="questions")
 
     def to_dict(self):
@@ -102,7 +99,6 @@ class DetailQuestion(db.Model):
 class Answer(db.Model):
     __tablename__ = "answers"
     id = db.Column(db.Integer, primary_key=True)
-
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     detail_question_id = db.Column(db.Integer, db.ForeignKey("detail_questions.id"))
 

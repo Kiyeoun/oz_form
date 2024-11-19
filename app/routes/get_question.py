@@ -9,11 +9,13 @@ get_blp = Blueprint("get_question", __name__, description='content api') # 매�
 # 질문지 화면 받아오기
 @get_blp.route('/question/<int:sqe>', methods=['GET'])
 def GET_detail_question(sqe):
-    #쿼리 문자열에서 user_id 가져오기
-    user_id = request.args.get('user_id', type=int)
-
+    user_id = session.get('user_id')
     if not user_id:
-        return "사용자 ID가 필요합니다.", 400
+        return redirect(url_for('routes.signup')), 400
+    # #쿼리 문자열에서 user_id 가져오기
+    # user_id = request.args.get('user_id', type=int)
+    # if not user_id:
+    #     return "사용자 ID가 필요합니다.", 400
 
     if request.method == 'GET':
         # 질문 정보 가져오기

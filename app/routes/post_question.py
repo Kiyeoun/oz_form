@@ -1,5 +1,5 @@
 # 라우트 및 뷰 정의
-from flask import render_template, request, jsonify, redirect, url_for
+from flask import render_template, request, jsonify, redirect, url_for, session
 from flask_smorest import Blueprint
 from app.models import db, Question, DetailQuestion, Answer
 
@@ -8,28 +8,32 @@ post_blp = Blueprint("post_question", __name__, description='content api') # 매
 # 질문지 POST요청 처리하기
 @post_blp.route('/question/<int:sqe>', methods=['POST'])
 def POST_detail_question(sqe):
-        # 쿼리 문자열에서 user_id 가져오기
-    user_id = request.args.get('user_id', type=int)
+	if request.method == 'POST':
+		# 쿼리 문자열, session user_id 가져오기
+		user_id = session.get('user_id')
+		if not user_id:
+			return redirect(url_for('routes.signup')), 400
+		
+		# 사용자의 응답 데이터 저장
+		detail_question_id = request.form.get('answer') # form에서 name이 answer인 곳에서 정보를 가져온다
+		if not detail_question_id:
+			return "답변 정보가 필요합니다.", 400
 
-    if not user_id:
-        return "사용자 ID가 필요합니다.", 400
-    if request.method == 'POST':
-        # 사용자의 응답 데이터 저장
-        detail_question_id = request.form.get('answer')
-        if not detail_question_id:
-            return "답변 정보가 필요합니다.", 400
+		# 응답 저장 및 중복된 답변 시 반영 하지 않기
+		duplicate_filter = Answer.query.filter_by(user_id=user_id, detail_question_id=detail_question_id).first()
+		if duplicate_filter:
+			duplicate_filter.detail_question_id = detail_question_id
+		else:
+			answer = Answer(user_id=user_id, detail_question_id=detail_question_id)
+			db.session.add(answer)
+		db.session.commit()
 
-        # 응답 저장
-        answer = Answer(user_id=user_id, detail_question_id=detail_question_id)
-        db.session.add(answer)
-        db.session.commit()
-
-        # 다음 질문으로 이동
-        next_question = Question.query.filter_by(sqe=sqe + 1).first()
-        if next_question:
-            return redirect(url_for('post_question.POST_detail_question', sqe=sqe + 1, user_id=user_id))
-        else:
-            return redirect(url_for('post_question.result', user_id=user_id))
+		# 다음 질문으로 이동
+		next_question = Question.query.filter_by(sqe=sqe + 1).first()
+		if next_question:
+			return redirect(url_for('post_question.POST_detail_question', sqe=sqe + 1, user_id=user_id))
+		else:
+			return redirect(url_for('post_question.result', user_id=user_id))
 
 
 @post_blp.route('/results/<int:user_id>', methods=['GET'])

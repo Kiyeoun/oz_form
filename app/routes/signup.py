@@ -24,7 +24,8 @@ class UserList(MethodView):
         print("요청 확인")
         user_data = request.get_json()
         user = User(name=user_data['name'], age=user_data['age'], gender=user_data['gender'])
+        # SQLAlchemy는 Model 클래스의 인스턴스를 생성할 때 자동적으로 __init__메서드를 생성해준다. models에서 db.Model을 상속받고 있기 때문에 키워드 인자 지정 가능
         db.session.add(user)
         db.session.commit()
-        session['user_id'] = user_data.id
+        session['user_id'] = user.id # User로 객체를 만든 경우 안에 있는 내용을 갖고오고 싶을 때 .을 사용해야한다
         return jsonify({"message": "User created", "user_id": user.id}), 201
