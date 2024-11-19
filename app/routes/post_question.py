@@ -3,12 +3,10 @@ from flask import render_template, request, jsonify, redirect, url_for
 from flask_smorest import Blueprint
 from app.models import db, Question, DetailQuestion, Answer
 
-
-route_blp = Blueprint("detail_question", __name__, description='content api') # 매개변수 (블루프린트 이름, 블루프린트 모듈 이름)
-
+post_blp = Blueprint("post_question", __name__, description='content api') # 매개변수 (블루프린트 이름, 블루프린트 모듈 이름(import할 모듈명))
 
 # 질문지 POST요청 처리하기
-@route_blp.route('/question/<int:sqe>', methods=['POST'])
+@post_blp.route('/question/<int:sqe>', methods=['POST'])
 def POST_detail_question(sqe):
         # 쿼리 문자열에서 user_id 가져오기
     user_id = request.args.get('user_id', type=int)
@@ -29,12 +27,12 @@ def POST_detail_question(sqe):
         # 다음 질문으로 이동
         next_question = Question.query.filter_by(sqe=sqe + 1).first()
         if next_question:
-            return redirect(url_for('question.POST_detail_question', sqe=sqe + 1, user_id=user_id))
+            return redirect(url_for('post_question.POST_detail_question', sqe=sqe + 1, user_id=user_id))
         else:
-            return redirect(url_for('question.result', user_id=user_id))
+            return redirect(url_for('post_question.result', user_id=user_id))
 
 
-@route_blp.route('/results/<int:user_id>', methods=['GET'])
+@post_blp.route('/results/<int:user_id>', methods=['GET'])
 def result(user_id):
     # 사용자의 응답 데이터 가져오기
     answers = Answer.query.filter_by(user_id=user_id).all()

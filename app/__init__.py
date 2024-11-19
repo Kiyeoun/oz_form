@@ -1,5 +1,4 @@
 # init 앱 초기화 및 설정
-
 import click
 from config import api, db
 from flask import Flask
@@ -29,9 +28,15 @@ def create_app():
 	api.init_app(application) # Flask application에 api 초기화
 	migrate.init_app(application, db) # 애플리케이션과 db를 인자로 보내 migrate 초기화
 
-	
-	from app.routes.signup import route_blp
-	application.register_blueprint(route_blp) # URL 라우팅을 관리하는 블루프린트 등록
+
+	from app.routes.signup import signup_blp
+	from app.routes.post_question import post_blp
+	from app.routes.get_question import get_blp
+
+	# URL 라우팅을 관리하는 블루프린트 등록
+	application.register_blueprint(signup_blp)
+	application.register_blueprint(post_blp)
+	application.register_blueprint(get_blp)
 
 	@click.command("init-db") # 터미널에 flask init-db를 입력하면 테이블을 생성
 	@with_appcontext
@@ -40,5 +45,4 @@ def create_app():
 		click.echo("Initialized the database.")
 
 	application.cli.add_command(init_db_command)
-
-    return application
+	return application
