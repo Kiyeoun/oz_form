@@ -20,7 +20,7 @@ class UserList(MethodView):
     def get(self):
         return render_template("signup.html")
 
-    def post(self):
+    def post(self): # 타임스탬프 추가해보기
         print("요청 확인")
         user_data = request.get_json()
         user = User(name=user_data['name'], age=user_data['age'], gender=user_data['gender'])

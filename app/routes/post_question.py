@@ -8,7 +8,7 @@ post_blp = Blueprint("post_question", __name__, description='content api') # 매
 # 질문지 POST요청 처리하기
 @post_blp.route('/question/<int:sqe>', methods=['POST'])
 def POST_detail_question(sqe):
-	if request.method == 'POST':
+	if request.method == 'POST': # 혹시 모르니까 1번 더 필터링
 		# 쿼리 문자열, session user_id 가져오기
 		user_id = session.get('user_id')
 		if not user_id:
@@ -16,7 +16,7 @@ def POST_detail_question(sqe):
 		
 		# 사용자의 응답 데이터 저장
 		detail_question_id = request.form.get('answer') # form에서 name이 answer인 곳에서 정보를 가져온다
-		if not detail_question_id:
+		if not detail_question_id: # 답변을 선택하지 않았을 때 html에서 버튼을 활성화시키지 않겠지만 일단 필터링
 			return "답변 정보가 필요합니다.", 400
 
 		# 응답 저장 및 중복된 답변 시 반영 하지 않기
@@ -32,7 +32,7 @@ def POST_detail_question(sqe):
 		next_question = Question.query.filter_by(sqe=sqe + 1).first()
 		if next_question:
 			return redirect(url_for('post_question.POST_detail_question', sqe=sqe + 1, user_id=user_id))
-		else:
+		else: # user_id는 라우트에 명시돼있지 않기 때문에 쿼리문자열(?user_id=<값>)으로 들어간다
 			return redirect(url_for('post_question.result', user_id=user_id))
 
 
