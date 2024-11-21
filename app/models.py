@@ -100,11 +100,13 @@ class Answer(db.Model):
     __tablename__ = "answers"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    question_id = db.Column(db.Integer)
     detail_question_id = db.Column(db.Integer, db.ForeignKey("detail_questions.id"))
 
     def to_dict(self):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "detail_question_id": self.detail_question_id,
+            "question_id" : self.question_id,
+            "detail_question_id": self.detail_question_id
         }

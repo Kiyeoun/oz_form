@@ -20,12 +20,12 @@ class UserList(MethodView):
     def get(self):
         return render_template("signup.html")
 
-    def post(self): # 타임스탬프 추가해보기
+    def post(self):
         print("요청 확인")
         user_data = request.get_json()
         user = User(name=user_data['name'], age=user_data['age'], gender=user_data['gender'])
         # SQLAlchemy는 Model 클래스의 인스턴스를 생성할 때 자동적으로 __init__메서드를 생성해준다. models에서 db.Model을 상속받고 있기 때문에 키워드 인자 지정 가능
-        db.session.add(user)
-        db.session.commit()
-        session['user_id'] = user.id # User로 객체를 만든 경우 안에 있는 내용을 갖고오고 싶을 때 .을 사용해야한다
+        db.session.add(user) # db(SQLAchemy)의 세션에 추가
+        db.session.commit() # db 커밋
+        session['user_id'] = user.id # Flask의 session에 user_id추가(브라우저 쿠키에 저장 / 26열에서 User로 객체를 만들었을 경우 안에 있는 내용을 갖고오고 싶을 때 .을 사용해야한다)
         return jsonify({"message": "User created", "user_id": user.id}), 201
