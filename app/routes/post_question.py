@@ -42,27 +42,4 @@ def POST_detail_question(sqe): # sqe는 URL 경로에서 받아온다
 			session['current_question'] = sqe + 1
 			return redirect(url_for('post_question.POST_detail_question', sqe=sqe + 1, user_id=user_id))
 		else: # user_id는 라우트에 명시돼있지 않기 때문에 쿼리문자열(?user_id=<값>)으로 들어간다
-			return redirect(url_for('post_question.result', user_id=user_id))
-
-
-
-
-
-
-@post_blp.route('/results/<int:user_id>', methods=['GET'])
-def result(user_id):
-    # 사용자의 응답 데이터 가져오기
-    answers = Answer.query.filter_by(user_id=user_id).all()
-
-    # 필요한 통계 데이터 계산 (예시)
-    results_data = {
-        "total_answers": len(answers),
-        "same_result_chart": [],  # Plotly 그래프 데이터 추가
-        "age_chart": [],
-        "gender_chart": [],
-        "age_distribution_chart": [],
-        "question_charts": []
-    }
-
-    # 결과 HTML 렌더링
-    return render_template('results.html', results=results_data)
+			return redirect(url_for('results.result', user_id=user_id))
