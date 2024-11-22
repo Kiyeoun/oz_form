@@ -1,5 +1,5 @@
 # 라우트 및 뷰 정의
-from flask import render_template, request, jsonify, redirect, url_for, session, flash, current_app
+from flask import render_template, request, jsonify, redirect, url_for, session
 from flask.views import MethodView
 from flask_smorest import Blueprint
 from app.models import db, Question, DetailQuestion, Answer, User, Image
