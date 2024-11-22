@@ -1,9 +1,9 @@
 # 라우트 및 뷰 정의
-from flask import render_template, request, jsonify, redirect, url_for, session, flash
+from flask import request, redirect, url_for, session, flash
 from flask_smorest import Blueprint
-from app.models import db, Question, DetailQuestion, Answer
+from app.models import db, Question, Answer
 
-post_blp = Blueprint("post_question", __name__, description='content api') # 매개변수 (블루프린트 이름, 블루프린트 모듈 이름(import할 모듈명))
+post_blp = Blueprint("post_question", __name__, description='post api') # 매개변수 (블루프린트 이름, 블루프린트 모듈 이름(import할 모듈명))
 
 # 질문지 POST요청 처리하기
 @post_blp.route('/question/<int:sqe>', methods=['POST'])

@@ -5,7 +5,7 @@ from flask_smorest import Blueprint
 from app.models import db, Question, DetailQuestion, Answer, User, Image
 
 
-signup_blp = Blueprint("signup", __name__, description='content api') # 매개변수 (블루프린트 이름, 블루프린트 모듈 이름(import할 이름))
+signup_blp = Blueprint("signup", __name__, description='signup api') # 매개변수 (블루프린트 이름, 블루프린트 모듈 이름(import할 이름))
 
 # 기본 화면
 @signup_blp.route("/")

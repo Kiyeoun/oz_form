@@ -1,10 +1,9 @@
 # 라우트 및 뷰 정의
-from flask import render_template, request, jsonify, redirect, url_for, session
-from flask.views import MethodView
+from flask import render_template, request, redirect, url_for, session
 from flask_smorest import Blueprint
-from app.models import db, Question, DetailQuestion, Answer, User, Image
+from app.models import db, Question, DetailQuestion
 
-get_blp = Blueprint("get_question", __name__, description='content api') # 매개변수 (블루프린트 이름, 블루프린트 모듈 이름(import할 이름))
+get_blp = Blueprint("get_question", __name__, description='get api') # 매개변수 (블루프린트 이름, 블루프린트 모듈 이름(import할 이름))
 
 # 질문지 화면 받아오기
 @get_blp.route('/question/<int:sqe>', methods=['GET'])
