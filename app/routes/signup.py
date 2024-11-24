@@ -16,7 +16,7 @@ def index():
 
 # 회원가입 화면
 @signup_blp.route('/signup')
-class UserList(MethodView):
+class Signup(MethodView):
     def get(self):
         return render_template("signup.html")
 
@@ -29,3 +29,4 @@ class UserList(MethodView):
         db.session.commit() # db 커밋
         session['user_id'] = user.id # Flask의 session에 user_id추가(브라우저 쿠키에 저장 / 26열에서 User로 객체를 만들었을 경우 안에 있는 내용을 갖고오고 싶을 때 .을 사용해야한다)
         return jsonify({"message": "참여해주셔서 감사합니다.", "user_id": user.id}), 201
+        # jsonify는 서버에서 클라이언트로 정보를 전달하기 위해 쓰인다

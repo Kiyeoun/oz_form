@@ -1,5 +1,5 @@
 # 라우트 및 뷰 정의
-from flask import render_template, request, redirect, url_for, session
+from flask import render_template, request, redirect, url_for, session, flash
 from flask_smorest import Blueprint
 from app.models import db, Question, DetailQuestion
 
@@ -11,7 +11,8 @@ def GET_detail_question(sqe):
 	if request.method == 'GET':
 		user_id = session.get('user_id') # Flask session에서 user_id를 가져온다
 		if not user_id:
-			return redirect(url_for('routes.signup')), 400
+			flash('로그인이 필요합니다. 회원가입 페이지로 이동합니다.', 'warning')
+			return redirect(url_for('signup.Signup'))
 		# #쿼리 문자열에서 user_id 가져오기, 세션x버전
 		# user_id = request.args.get('user_id', type=int)
 		# if not user_id:

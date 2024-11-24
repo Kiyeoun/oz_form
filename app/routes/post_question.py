@@ -12,7 +12,8 @@ def POST_detail_question(sqe): # sqe는 URL 경로에서 받아온다
 		# 쿼리 문자열, session user_id 가져오기
 		user_id = session.get('user_id')
 		if not user_id:
-			return redirect(url_for('routes.signup')), 400
+			flash('로그인이 필요합니다. 회원가입 페이지로 이동합니다.', 'warning')
+			return redirect(url_for('signup.Signup'))
 
 		# 세션에서 사용자가 접근할 수 있는 질문 번호 확인
 		current_step = session.get('current_question', 1) # current_question이라는 key가 없으면 초기 value 1으로 설정

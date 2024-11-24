@@ -60,7 +60,7 @@
                         <ul class="list-group list-group-flush text-center border-0">
                             {% for answer in user_answers %}
                             <li class="list-group-item border-0 bg-transparent">
-                                <strong>{{ answer.question }}</strong>: {{ answer.answer }}
+                                <strong>{{ answer.question_title }}</strong>: {{ answer.dq_content }}
                             </li>
                             {% endfor %}
                         </ul>
