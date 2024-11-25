@@ -133,15 +133,15 @@ def result(user_id: int):
         return redirect(url_for('signup.Signup'))
     if session_user_id != user_id:
         flash('본인의 결과만 확인할 수 있습니다.', 'danger')
-        return redirect(url_for('signup.index'))
+        return redirect(url_for('results.result', user_id=session_user_id))
     
     # 유저 답변 데이터 가져오기
     user_answer_data = get_user_answers(user_id)
     if not user_answer_data: # 유저 데이터가 없으면 빈페이지
         return render_template("results.html", same_result_chart=None, question_charts={}, user_answers=[])
     # 각 변수 할당
-    _, user_answer_id, user_answer_content = user_answer_data
-    # 인덱스를 맞추기 위해 맨 앞에 _를 사용(Answer의 자리지만 함수 내에서 answer 테이블에서 user_id를 가져올 때 사용되고 이후엔 역할이 없기 때문에 _로 처리)
+    user_answer_id = user_answer_data[1]
+    user_answer_content = user_answer_data[2]
 
     # 모든 유저의 답변 데이터 가져오기
     all_user_answers = db.session.query(Answer).all()
@@ -151,7 +151,7 @@ def result(user_id: int):
     # Identify Perfect Matches
     perfect_matches, total_users = get_perfect_matches(user_answer_id, all_user_answers)
 
-    # Generate Charts
+    # 차트 생성
     same_result_chart = create_pie_chart(len(perfect_matches), total_users)
     question_charts = {}
     for question in Question.query.all():

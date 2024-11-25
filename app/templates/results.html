@@ -48,6 +48,15 @@
 </head>
 <body>
     <div class="container">
+        {% with messages = get_flashed_messages() %}
+		{% if messages %}
+			<div class="alert alert-warning">
+				{% for message in messages %}
+					<p>{{ message }}</p>
+				{% endfor %}
+			</div>
+		{% endif %}
+		{% endwith %}
         <!-- 나와 같은 답변 비율 -->
         {% if same_result_chart %}
         <div class="row mb-4 d-flex justify-content-center">
@@ -72,6 +81,7 @@
         {% endif %}            
         <!-- 질문별 응답 분포 -->
         <div class="row">
+            <h3 class="text-center mb-3">전체 참여자의 선택지 수</h4>
             {% for question_id, chart in question_charts.items() %}
             <div class="col-md-12 mb-4 d-flex justify-content-center">
                 <div id="question_chart_{{ question_id }}"></div>
