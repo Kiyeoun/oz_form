@@ -3,6 +3,7 @@ from flask import render_template, request, jsonify, redirect, url_for, session
 from flask.views import MethodView
 from flask_smorest import Blueprint
 from app.models import db, Question, DetailQuestion, Answer, User, Image
+from datetime import datetime
 
 
 signup_blp = Blueprint("signup", __name__, description='signup api') # 매개변수 (블루프린트 이름, 블루프린트 모듈 이름(import할 이름))

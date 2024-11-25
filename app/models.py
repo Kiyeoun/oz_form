@@ -29,7 +29,7 @@ class User(db.Model):
     name = db.Column(db.String(10), nullable=False)
     age = db.Column(db.Enum(AgeStatus), nullable=False)
     gender = db.Column(db.Enum(GenderStatus), nullable=False)
-
+    created_at = db.Column(db.DateTime(), nullable=False, default=datetime.now)
     def to_dict(self):
         return {
             "id": self.id,
@@ -37,7 +37,8 @@ class User(db.Model):
             "age": self.age.value if hasattr(self.age, "value") else self.age,
             "gender": (
                 self.gender.value if hasattr(self.gender, "value") else self.gender
-            )
+            ),
+            "created_at": self.create_at.isoformat() if self.create_at else None
         }
 
 
@@ -102,11 +103,13 @@ class Answer(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     question_id = db.Column(db.Integer)
     detail_question_id = db.Column(db.Integer, db.ForeignKey("detail_questions.id"))
+    created_at = db.Column(db.DateTime(), nullable=False, default=datetime.now)
 
     def to_dict(self):
         return {
             "id": self.id,
             "user_id": self.user_id,
             "question_id" : self.question_id,
-            "detail_question_id": self.detail_question_id
+            "detail_question_id": self.detail_question_id,
+            "created_at": self.create_at.isoformat() if self.create_at else None
         }
