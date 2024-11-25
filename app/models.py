@@ -1,7 +1,7 @@
-#다시 파악해보기
+# SQLAchemy 모델 정의
+# 마시멜로로 스키마 생성
 from datetime import datetime, timezone
 from enum import Enum
-
 from config import db
 
 
@@ -29,8 +29,7 @@ class User(db.Model):
     name = db.Column(db.String(10), nullable=False)
     age = db.Column(db.Enum(AgeStatus), nullable=False)
     gender = db.Column(db.Enum(GenderStatus), nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-
+    created_at = db.Column(db.DateTime(), nullable=False, default=datetime.now)
     def to_dict(self):
         return {
             "id": self.id,
@@ -39,7 +38,7 @@ class User(db.Model):
             "gender": (
                 self.gender.value if hasattr(self.gender, "value") else self.gender
             ),
-            "email": self.email,
+            "created_at": self.created_at.isoformat() if self.created_at else None
         }
 
 
@@ -48,14 +47,15 @@ class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.TEXT, nullable=False)
     type = db.Column(db.Enum(ImageStatus), nullable=False)
-
     questions = db.relationship("Question", back_populates="image")
 
     def to_dict(self):
         return {
             "id": self.id,
             "url": self.url,
-            "type": self.type.value if hasattr(self.type, "value") else self.type,
+            "type": self.type.value if hasattr(self.type, "value") else self.type
+            # enum을 한 번 더 확인하는 코드, self.type의 속성 중에 "value"가 있으면 True(기본적으로 enum은 value속성을 갖고 있다)
+            # self.type.value => 예를 들어 속성이 main이면 ImageStatus.main.value = "main"이 된다. ImageStatus.main까지만 적혀있으면 그냥 enum객체 취급이다.
         }
 
 
@@ -65,9 +65,7 @@ class Question(db.Model):
     title = db.Column(db.String(100), nullable=False)
     is_active = db.Column(db.Boolean, nullable=False, default=True)
     sqe = db.Column(db.Integer, nullable=False)
-
     image_id = db.Column(db.Integer, db.ForeignKey("images.id"), nullable=False)
-
     image = db.relationship("Image", back_populates="questions")
 
     def to_dict(self):
@@ -102,13 +100,16 @@ class DetailQuestion(db.Model):
 class Answer(db.Model):
     __tablename__ = "answers"
     id = db.Column(db.Integer, primary_key=True)
-
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    question_id = db.Column(db.Integer)
     detail_question_id = db.Column(db.Integer, db.ForeignKey("detail_questions.id"))
+    created_at = db.Column(db.DateTime(), nullable=False, default=datetime.now)
 
     def to_dict(self):
         return {
             "id": self.id,
             "user_id": self.user_id,
+            "question_id" : self.question_id,
             "detail_question_id": self.detail_question_id,
+            "created_at": self.created_at.isoformat() if self.created_at else None
         }
