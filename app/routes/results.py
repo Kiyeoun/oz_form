@@ -28,6 +28,8 @@ def create_pie_chart(perfect_match_count: int, total_users: int) -> str:
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
     )
+    custum_colors = ['#b0c4de', '#87cefa']
+    chart.update_traces(marker=dict(colors=custum_colors))
     return json.dumps(chart, cls=plotly.utils.PlotlyJSONEncoder)
 
 # bar 차트 만드는 함수
@@ -42,7 +44,6 @@ def create_bar_chart(question_title: str, answer_data: List[Tuple[str, int, int]
         y="응답 수",
         title=question_title,
         category_orders={"답변": ordered_categories},
-        color='답변'
     )
     chart.update_layout(
         xaxis={"tickangle": 0, "automargin": True, "tickfont": {"size": 12}},
@@ -50,6 +51,8 @@ def create_bar_chart(question_title: str, answer_data: List[Tuple[str, int, int]
         title_x=0.5, title_y=0.95,
         title_font=dict(size=30)
     )
+    custum_colors = ['#b0e0e6', '#add8e6', '#87ceeb', '#87cefa', '#4682b4']
+    chart.update_traces(marker=dict(color=custum_colors))
     return json.dumps(chart, cls=plotly.utils.PlotlyJSONEncoder)
 
 # 유저가 선택한 질문지에 대한 정보를 가져오는 함수

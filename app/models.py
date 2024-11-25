@@ -38,7 +38,7 @@ class User(db.Model):
             "gender": (
                 self.gender.value if hasattr(self.gender, "value") else self.gender
             ),
-            "created_at": self.create_at.isoformat() if self.create_at else None
+            "created_at": self.created_at.isoformat() if self.created_at else None
         }
 
 
@@ -111,5 +111,5 @@ class Answer(db.Model):
             "user_id": self.user_id,
             "question_id" : self.question_id,
             "detail_question_id": self.detail_question_id,
-            "created_at": self.create_at.isoformat() if self.create_at else None
+            "created_at": self.created_at.isoformat() if self.created_at else None
         }
