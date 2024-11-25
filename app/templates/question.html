@@ -22,15 +22,15 @@
 <body>
     <div class="container">
 
-		{% with messages = get_flashed_messages() %}
-		{% if messages %}
-			<div class="alert alert-warning">
-				{% for message in messages %}
-					<p>{{ message }}</p>
-				{% endfor %}
-			</div>
-		{% endif %}
-		{% endwith %}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-warning text-center" style="width: 50%; margin: 0 auto;">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
 
         <h2 class="my-4 d-flex justify-content-center">{{ question.title }}</h2>
         <img src="{{ question.image.url }}" alt="Sub Image" class="img-fluid mb-4">

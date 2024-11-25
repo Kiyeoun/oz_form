@@ -15,14 +15,14 @@
 <body>
     <div class="container text-center">
         {% with messages = get_flashed_messages() %}
-		{% if messages %}
-			<div class="alert alert-warning">
-				{% for message in messages %}
-					<p>{{ message }}</p>
-				{% endfor %}
-			</div>
-		{% endif %}
-		{% endwith %}
+        {% if messages %}
+            <div class="alert alert-warning text-center" style="width: 50%; margin: 0 auto;">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
         <header>
             <h1 class="display-4 mb-4">음악 선호도 설문 조사</h1>
         </header>

@@ -12,14 +12,14 @@
 <body>
     <div class="container">
         <!--flash 띄우는 html-->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-            <script>
-                {% for category, message in messages %}
-                    alert("{{ message }}");
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-warning text-center" style="width: 50%; margin: 0 auto;">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
                 {% endfor %}
-            </script>
-            {% endif %}
+            </div>
+        {% endif %}
         {% endwith %}
         <h2 class="my-4 text-center">회원가입</h2>
         <form id="signup-form">
