@@ -27,11 +27,13 @@ def create_app():
 	from app.routes.signup import signup_blp
 	from app.routes.post_question import post_blp
 	from app.routes.get_question import get_blp
+	from app.routes.results import result_blp
 
 	# URL 라우팅을 관리하는 블루프린트 등록
 	application.register_blueprint(signup_blp)
 	application.register_blueprint(post_blp)
 	application.register_blueprint(get_blp)
+	application.register_blueprint(result_blp)
 
 	db.init_app(application) # Flask application에 db 초기화
 	api.init_app(application) # Flask application에 api 초기화

@@ -1,9 +1,9 @@
 # 라우트 및 뷰 정의
-from flask import render_template, request, jsonify, redirect, url_for, session, flash
+from flask import request, redirect, url_for, session, flash
 from flask_smorest import Blueprint
-from app.models import db, Question, DetailQuestion, Answer
+from app.models import db, Question, Answer
 
-post_blp = Blueprint("post_question", __name__, description='content api') # 매개변수 (블루프린트 이름, 블루프린트 모듈 이름(import할 모듈명))
+post_blp = Blueprint("post_question", __name__, description='post api') # 매개변수 (블루프린트 이름, 블루프린트 모듈 이름(import할 모듈명))
 
 # 질문지 POST요청 처리하기
 @post_blp.route('/question/<int:sqe>', methods=['POST'])
@@ -12,7 +12,8 @@ def POST_detail_question(sqe): # sqe는 URL 경로에서 받아온다
 		# 쿼리 문자열, session user_id 가져오기
 		user_id = session.get('user_id')
 		if not user_id:
-			return redirect(url_for('routes.signup')), 400
+			flash('로그인이 필요합니다. 회원가입 페이지로 이동합니다.', 'warning')
+			return redirect(url_for('signup.Signup'))
 
 		# 세션에서 사용자가 접근할 수 있는 질문 번호 확인
 		current_step = session.get('current_question', 1) # current_question이라는 key가 없으면 초기 value 1으로 설정
@@ -42,27 +43,4 @@ def POST_detail_question(sqe): # sqe는 URL 경로에서 받아온다
 			session['current_question'] = sqe + 1
 			return redirect(url_for('post_question.POST_detail_question', sqe=sqe + 1, user_id=user_id))
 		else: # user_id는 라우트에 명시돼있지 않기 때문에 쿼리문자열(?user_id=<값>)으로 들어간다
-			return redirect(url_for('post_question.result', user_id=user_id))
-
-
-
-
-
-
-@post_blp.route('/results/<int:user_id>', methods=['GET'])
-def result(user_id):
-    # 사용자의 응답 데이터 가져오기
-    answers = Answer.query.filter_by(user_id=user_id).all()
-
-    # 필요한 통계 데이터 계산 (예시)
-    results_data = {
-        "total_answers": len(answers),
-        "same_result_chart": [],  # Plotly 그래프 데이터 추가
-        "age_chart": [],
-        "gender_chart": [],
-        "age_distribution_chart": [],
-        "question_charts": []
-    }
-
-    # 결과 HTML 렌더링
-    return render_template('results.html', results=results_data)
+			return redirect(url_for('results.result', user_id=user_id))

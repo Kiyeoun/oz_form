@@ -14,8 +14,17 @@
 </head>
 <body>
     <div class="container text-center">
+        {% with messages = get_flashed_messages() %}
+		{% if messages %}
+			<div class="alert alert-warning">
+				{% for message in messages %}
+					<p>{{ message }}</p>
+				{% endfor %}
+			</div>
+		{% endif %}
+		{% endwith %}
         <header>
-            <h1 class="display-4 mb-4">음악 선호도 조사 설문</h1>
+            <h1 class="display-4 mb-4">음악 선호도 설문 조사</h1>
         </header>
         <section>
             <img src="{{ image_url.url }}" alt="Main Image" class="img-fluid mb-4">

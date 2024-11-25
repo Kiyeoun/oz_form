@@ -11,6 +11,16 @@
 </head>
 <body>
     <div class="container">
+        <!--flash 띄우는 html-->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <script>
+                {% for category, message in messages %}
+                    alert("{{ message }}");
+                {% endfor %}
+            </script>
+            {% endif %}
+        {% endwith %}
         <h2 class="my-4 text-center">회원가입</h2>
         <form id="signup-form">
             <div class="mb-3">
