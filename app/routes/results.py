@@ -18,7 +18,7 @@ def create_pie_chart(perfect_match_count: int, total_users: int) -> str:
         },
         names="labels",
         values="values",
-        title="나와 같은 대답을 한 사람과의 비율",
+        title="나와 같은 대답을 한 사람과의 비율"
     )
     chart.update_layout(
         width=900, height=650,
@@ -41,13 +41,14 @@ def create_bar_chart(question_title: str, answer_data: List[Tuple[str, int, int]
         x="답변",
         y="응답 수",
         title=question_title,
-        category_orders={"답변": ordered_categories}
+        category_orders={"답변": ordered_categories},
+        color='답변'
     )
     chart.update_layout(
         xaxis={"tickangle": 0, "automargin": True, "tickfont": {"size": 12}},
         width=1000, height=700,
         title_x=0.5, title_y=0.95,
-        title_font=dict(size=30),
+        title_font=dict(size=30)
     )
     return json.dumps(chart, cls=plotly.utils.PlotlyJSONEncoder)
 
@@ -129,8 +130,8 @@ def result(user_id: int):
     # user_id가 세션에 존재하는지 체크
     session_user_id = session.get('user_id')
     if not session_user_id:
-        flash('로그인이 필요합니다.', 'warning')
-        return redirect(url_for('signup.Signup'))
+        flash('로그인이 필요합니다. 메인 화면으로 이동합니다.', 'warning')
+        return redirect(url_for('signup.index'))
     if session_user_id != user_id:
         flash('본인의 결과만 확인할 수 있습니다.', 'danger')
         return redirect(url_for('results.result', user_id=session_user_id))

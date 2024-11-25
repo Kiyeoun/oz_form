@@ -7,13 +7,14 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         body {
-            background-color: #f8f9fa; /* 부드러운 배경색 */
-            font-family: 'Arial', sans-serif;
+            background-color: #f7f9fc; /* 부드러운 배경색 */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
         }
         
         h3 {
             font-size: 2.5rem;
-            color: #343a40; /* 진한 텍스트 색 */
+            color: #4A90E2; /* 주요 텍스트 색상 */
             margin-bottom: 1.5rem;
         }
         
@@ -28,6 +29,7 @@
             color: #212529; /* 일반 텍스트 색 */
         }
         
+        /* 차트 컨테이너 스타일 */
         #same_result_chart, .chart-container {
             background: white;
             border-radius: 10px; /* 둥근 모서리 */
@@ -35,12 +37,35 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
             width: 100%; /* 차트 너비를 100%로 확장 */
             max-width: 1000px; /* 최대 너비 설정 */
-            margin: 0 auto; /* 가운데 정렬 */
+            margin: 20px auto; /* 가운데 정렬 */
         }
         
+        /* 각 차트를 구분할 수 있게 강조 */
+        .chart-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px; /* 모서리 둥글게 */
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px; /* 각 차트 간 여백 */
+        }
+        
+        /* 컨테이너 스타일 */
         .container {
-            margin-top: 40px; /* 상단 여백 추가 */
+            margin-top: 60px; /* 상단 여백 추가 */
             margin-bottom: 40px; /* 하단 여백 추가 */
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 12px; /* 모서리 둥글게 */
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .alert {
+            margin-bottom: 20px;
+            padding: 15px;
+            font-size: 1rem;
+            border-radius: 8px;
+            background-color: #f8d7da;
+            color: #721c24;
         }
         
     </style>
@@ -50,18 +75,19 @@
     <div class="container">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <div class="alert alert-warning text-center" style="width: 50%; margin: 0 auto;">
+            <div class="alert text-center">
                 {% for message in messages %}
                     <p>{{ message }}</p>
                 {% endfor %}
             </div>
         {% endif %}
         {% endwith %}
+        
         <!-- 나와 같은 답변 비율 -->
         {% if same_result_chart %}
         <div class="row mb-4 d-flex justify-content-center">
             <div class="col-12 text-center">
-                <h3 class="mb-4" style="font-size: 50px;">설문 조사에 참여해주셔서 감사합니다.</h3>
+                <h3 class="mb-4">설문 조사에 참여해주셔서 감사합니다.</h3>
                 <!-- 내가 선택한 질문들 -->
                 <div class="row mb-4">
                     <div class="col-12">
@@ -75,16 +101,21 @@
                         </ul>
                     </div>
                 </div>
+                <!-- 차트가 담길 div -->
                 <div id="same_result_chart" class="chart-container"></div> <!-- 차트 컨테이너 클래스 적용 -->
             </div>
         </div>
         {% endif %}            
+        
         <!-- 질문별 응답 분포 -->
         <div class="row">
-            <h3 class="text-center mb-3">전체 참여자의 선택지 수</h4>
+            <h3 class="text-center mt-5 mb-5">전체 참여자의 선택지 수</h3>
             {% for question_id, chart in question_charts.items() %}
             <div class="col-md-12 mb-4 d-flex justify-content-center">
-                <div id="question_chart_{{ question_id }}"></div>
+                <!-- 각 차트를 감싸는 카드 형태로 구분 -->
+                <div class="chart-card">
+                    <div id="question_chart_{{ question_id }}"></div>
+                </div>
             </div>
             {% endfor %}
         </div>

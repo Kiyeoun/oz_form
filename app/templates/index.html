@@ -5,32 +5,89 @@
     <title>Survey</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; }
-        header, section { margin: 20px 0; }
-        .container { max-width: 600px; }
-        img { width: 100%; height: auto; }
-        button { width: 100%; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #f4f6f9; /* 부드러운 회색 배경 */
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-top: 60px;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4A90E2;
+            margin-bottom: 30px;
+        }
+        .alert {
+            margin-bottom: 30px;
+            padding: 15px;
+            font-size: 1rem;
+            border-radius: 8px;
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .alert p {
+            margin: 0;
+        }
+        .card {
+            border: none;
+            background-color: #f7f9fc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+        }
+        .card img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            background-color: #4A90E2;
+            border: none;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #357ABD;
+        }
     </style>
 </head>
 <body>
     <div class="container text-center">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <div class="alert alert-warning text-center" style="width: 50%; margin: 0 auto;">
+            <div class="alert">
                 {% for message in messages %}
                     <p>{{ message }}</p>
                 {% endfor %}
             </div>
         {% endif %}
         {% endwith %}
+        
         <header>
-            <h1 class="display-4 mb-4">음악 선호도 설문 조사</h1>
+            <h1>음악 선호도 설문 조사</h1>
         </header>
+        
         <section>
-            <img src="{{ image_url.url }}" alt="Main Image" class="img-fluid mb-4">
-            <button class="btn btn-primary btn-lg" onclick="location.href='/signup'">회원가입 시작하기</button>
+            <div class="card">
+                <img src="{{ image_url.url }}" alt="Main Image" class="img-fluid">
+                <p class="card-text">설문을 통해 당신의 음악 선호도를 공유해주세요.<br>간단한 회원가입 후 설문에 참여할 수 있습니다!</p>
+                <button class="btn btn-primary" onclick="location.href='/signup'">회원가입 시작하기</button>
+            </div>
         </section>
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
